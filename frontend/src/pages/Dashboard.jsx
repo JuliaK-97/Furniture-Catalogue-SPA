@@ -1,6 +1,8 @@
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../styles/button.css'
+
 
 const initialProjects = [
   { id: 'p-01', name: 'Company A', items: 165, categories: 3, lastUpdated: '2025-11-04', status: 'open' },
@@ -9,7 +11,7 @@ const initialProjects = [
 
 export default function Dashboard() {
   const [projects, setProjects] = useState(initialProjects)
-  const [open, setOpen] = useState(null)
+   const navigate = useNavigate()
 
   const handleClose = (id) => {
     setProjects(prev =>
@@ -19,14 +21,38 @@ export default function Dashboard() {
     )
   }
 
-  const handleOpen = (id) => {
-    setOpen(id)
-    // Placeholder for Epic 6
-    alert(`Viewing Project ${id} — Catalogue view will be implemented later`)
+  const handleOpen = (project) => {
+    if (project.status === 'closed') {
+      // Closed project → read-only catalogue view
+      navigate(`/catalogue/${project.id}?mode=readonly`)
+    } else {
+      // Open project → editable catalogue view
+      navigate(`/catalogue/${project.id}?mode=edit`)
+    }
   }
+  const handleCreateProject = () => {
+    const name = prompt("Enter a name for the new project:")
+    if (!name) return 
+
+    const newProject = {
+      id: `p-${projects.length + 1}`,
+      name,
+      items: 0,
+      categories: 0,
+      lastUpdated: new Date().toISOString().split('T')[0],
+      status: 'open'
+    }
+
+    setProjects(prev => [...prev, newProject])
+    navigate(`/categories/new`)
+  }
+
 
   return (
     <div>
+      <button className="btn-new" onClick={handleCreateProject}>
+        + New Project
+      </button>
       <h2>Current Projects</h2>
       <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(2, 1fr)' }}>
         {projects.map(p => (
@@ -36,7 +62,7 @@ export default function Dashboard() {
             <strong>Last Updated:</strong> {p.lastUpdated}<br />
             <strong>Status:</strong> {p.status}<br />
             <div style={{ marginTop: 8 }}>
-              <button className="btn btn-open" onClick={() => handleOpen(p.id)}>
+              <button className="btn btn-open" onClick={() => handleOpen(p)}>
                 Open Project
               </button>
               <button
@@ -47,11 +73,6 @@ export default function Dashboard() {
                 Close Project
               </button>
             </div>
-            {open === p.id && (
-              <div style={{ marginTop: 8 }}>
-                <p>Viewing details for {p.name}...</p>
-              </div>
-            )}
           </div>
         ))}
       </div>

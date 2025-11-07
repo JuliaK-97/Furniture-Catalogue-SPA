@@ -1,4 +1,4 @@
-export default function CategorySelection() {
+export default function AddItems() {
   return (
     <div>
       <h1>Adding items</h1>

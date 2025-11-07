@@ -1,4 +1,4 @@
-export default function CategorySelection() {
+export default function ItemCatalogue() {
   return (
     <div>
       <h1>Item catalogue</h1>

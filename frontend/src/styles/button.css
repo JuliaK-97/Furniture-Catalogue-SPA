@@ -1,5 +1,39 @@
 /* src/styles/button.css */
 
+
+.btn-new {
+  display: block;
+  margin: 2rem auto;              /* centers horizontally */
+  padding: 1.25rem 2.5rem;        /* bigger than other buttons */
+  font-size: 1.5rem;              /* larger text */
+  font-weight: bold;
+  color: #fff;
+  background-color: #90ee90;      /* light green */
+  border: none;
+  border-radius: 16px;            /* rounded edges */
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25); /* drop shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: sticky;               /* keeps it visible at the top */
+  top: 0;                         /* sticks to top of container */
+  z-index: 10; 
+
+}
+
+/* Hover effect */
+.btn-new:hover {
+  background-color: #76d976;      /* darker green on hover */
+  transform: translateY(-3px);    /* lift effect */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
+/* Active (click) effect */
+.btn-new:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+
 /* Base button style */
 .btn {
   color: #fff;

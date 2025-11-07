@@ -6,10 +6,7 @@ export default function App() {
   return (
     <div style={{padding: '1rem'}}>
       <h1>Furniture Catalogue</h1>
-      <p>Welcome to the dashboard!</p>
-      <main>
         <Outlet />
-      </main>
     </div>
   );
 }
