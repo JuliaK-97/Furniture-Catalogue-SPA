@@ -1,45 +1,34 @@
+import { createBrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
+
+// Pages
 import Dashboard from './pages/Dashboard.jsx';
 import CategorySelection from './pages/CategorySelection.jsx';
-import ItemCatalogue from './pages/ItemCatalogue.jsx';   // unified browse + search
+import ItemCatalogue from './pages/ItemCatalogue.jsx'; // unified browse + search
 import ItemDetail from './pages/ItemDetail.jsx';
 import AddItem from './pages/AddItem.jsx';
 import ProjectCatalogue from './pages/ProjectCatalogue.jsx';
 import Login from './pages/Login.jsx';
 import AuditLogs from './pages/AuditLogs.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
-import { createBrowserRouter } from "react-router-dom";
-
-import { Route } from 'react-router-dom';
-
 
 const routes = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
-      // Epic 1: Dashboard
       { index: true, element: <Dashboard /> },
-
-      // Epic 2: Category Selection
-      { path: "categories/:projectId", element: <CategorySelection /> },
-
-      // Epic 3: Item Catalogue
-      { path: "items", element: <ItemCatalogue /> },
-      { path: "items/:itemId", element: <ItemDetail /> },
-
-      // Epic 5: Add New Item
-      { path: "add-item", element: <AddItem /> },
-
-      // Epic 6: Project Catalogue View
-      { path: "catalogue/:projectId", element: <ProjectCatalogue /> },
-
-      // Epic 7: Cross Cutting Features
-      { path: "login", element: <Login /> },
-      { path: "audit-logs", element: <AuditLogs /> },
-      { path: "*", element: <ErrorPage /> },
-    ],
-  },
+      { path: 'login', element: <Login /> },
+      { path: 'catalogue/:projectId', element: <ProjectCatalogue /> },
+      { path: 'categories/new', element: <CategorySelection /> },
+      { path: 'items', element: <ItemCatalogue /> },
+      { path: 'items/:itemId', element: <ItemDetail /> },
+      { path: 'items/new', element: <AddItem /> },
+      { path: 'audit', element: <AuditLogs /> }
+    ]
+  }
 ]);
 
 export default routes;
+
