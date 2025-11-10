@@ -1,0 +1,89 @@
+.category-selection {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.category-selection h2 {
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.category-btn {
+  padding: 12px 18px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.category-btn:hover {
+  background-color: #e6f0ff;
+  border-color: #0078d4;
+}
+
+.category-btn.selected {
+  background-color: #0078d4;
+  color: #fff;
+  border-color: #0078d4;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.btn-select,
+.btn-cancel,
+.btn-add-category {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.btn-select {
+  background-color: #0078d4;
+  color: #fff;
+}
+.btn-select:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+.btn-cancel {
+  background-color: #f44336;
+  color: #fff;
+}
+.btn-cancel:hover {
+  background-color: #d32f2f;
+}
+
+
+.btn-add-category {
+  background-color: #4caf50;
+  color: #fff;
+}
+.btn-add-category:hover {
+  background-color: #388e3c;
+}
+
