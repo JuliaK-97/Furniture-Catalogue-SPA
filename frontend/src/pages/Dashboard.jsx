@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/button.css';
 import '../styles/dashboard.css';
+import QuickStats from '../components/QuickStats.jsx';
+
 
 
 const initialProjects = [
@@ -64,6 +66,7 @@ export default function Dashboard() {
     <button className="btn-new" onClick={handleCreateProject}>
       + New Project
     </button>
+    <QuickStats projects={projects}/>
     <h2>Current Projects</h2>
     <div className="project-grid">
       {projects.map(p => (

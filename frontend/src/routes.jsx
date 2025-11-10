@@ -22,9 +22,9 @@ const routes = createBrowserRouter([
       { path: 'login', element: <Login /> },
       { path: 'catalogue/:projectId', element: <ProjectCatalogue /> },
       { path: 'categories/new', element: <CategorySelection /> },
-      { path: 'items', element: <ItemCatalogue /> },
-      { path: 'items/:itemId', element: <ItemDetail /> },
-      { path: 'items/new', element: <AddItem /> },
+      { path: 'item_Cat/:categoryId', element: <ItemCatalogue /> },
+      { path: 'item_detail/:itemId', element: <ItemDetail /> },
+      { path: 'items/new/:categoryId', element: <AddItem /> },
       { path: 'audit', element: <AuditLogs /> }
     ]
   }
