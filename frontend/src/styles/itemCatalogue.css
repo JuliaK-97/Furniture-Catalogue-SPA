@@ -1,0 +1,82 @@
+.item-catalogue {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.item-catalogue h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.search-bar {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.item-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.item-card {
+  width: 160px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.item-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.item-card.selected {
+  border-color: #0078d4;
+  background-color: #e6f0ff;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.actions button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-select {
+  background-color: #0078d4;
+  color: #fff;
+}
+
+.btn-select:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.btn-dashboard {
+  background-color: #4caf50;
+  color: #fff;
+}

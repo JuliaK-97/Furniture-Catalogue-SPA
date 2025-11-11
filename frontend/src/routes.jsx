@@ -19,6 +19,7 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Dashboard /> },
+      { path: 'dashboard', element: <Dashboard /> },
       { path: 'login', element: <Login /> },
       { path: 'catalogue/:projectId', element: <ProjectCatalogue /> },
       { path: 'categories/new', element: <CategorySelection /> },
