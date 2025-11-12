@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import projectRoutes from "./routes/projectRoutes.js";
 import cors from "cors";
-
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -21,4 +21,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", projectRoutes);
+app.use("/api", categoryRoutes);
 export default app;

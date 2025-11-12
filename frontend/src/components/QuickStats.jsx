@@ -8,7 +8,7 @@ export default function QuickStats({projects}){
         );
     }
     const totalProjects = projects.length;
-    const totalCategories = projects.reduce((sum,p)=> sum + p.categories,0);
+    const totalCategories = projects.reduce((sum, p) => sum + p.categoryCount, 0);
     const lastUpdated = projects.reduce((latest,p) =>
         new Date(p.lastUpdated) > new Date(latest) ? p.lastUpdated : latest,
     projects[0].lastUpdated);
@@ -18,7 +18,11 @@ export default function QuickStats({projects}){
             <h3>Quick Stats</h3>
             <p><strong>Total Projects:</strong>{totalProjects}</p>
             <p><strong>Total Categories:</strong>{totalCategories}</p>
-            <p><strong>Last Updated:</strong>{lastUpdated}</p>
+            <p><strong>Last Updated:</strong>{" "}{new Date(lastUpdated).toLocaleDateString('en-GB', {
+                 day: 'numeric',
+                 month: 'long',
+                 year: 'numeric'
+               })}</p>
         </div>
     );
 }
