@@ -20,9 +20,5 @@ app.get("/", (req, res) => {
   res.send("Furniture Catalogue backend is running");
 });
 
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-});
-
 app.use("/api", projectRoutes);
+export default app;
