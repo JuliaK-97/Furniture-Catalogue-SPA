@@ -1,18 +1,20 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/categorySelection.css';
 
 export default function CategorySelection() {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [categories, setCategories] = useState([
-    { id: "Credenza", categoryName: "Credenza" },
-    { id: "Pedestal", categoryName: "Pedestal" },
-    { id: "Desks", categoryName: "Desks" },
-    { id: "Castor Chairs", categoryName: "Castor Chairs" },
-    { id: "Soft-seating", categoryName: "Soft-seating" }
-  ]);
+  const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/categories")
+    .then(res => res.json())
+    .then(data => setCategories(data))
+    .catch(err => console.error("Failed to fetch categories:", err));
+  }, []);
 
   const handleSelect = () => {
     if (selectedCategory) {
@@ -24,20 +26,31 @@ export default function CategorySelection() {
     navigate("/dashboard");
   };
 
-  const handleCreateCategory = () => {
+  const handleCreateCategory = async () => {
     const name = prompt("Enter a name for the new category:");
     if (!name) return;
 
     const newCategory = {
-      id: `c-${Date.now()}`,
       categoryName: name,
       items: 0,
-      lastUpdated: new Date().toISOString().split('T')[0],
+      lastUpdated: new Date().toISOString()
     };
 
-    setCategories((prev) => [...prev, newCategory]);
-    navigate(`/items/new/${newCategory.id}`);
+    try {
+      const res = await fetch("http://localhost:5000/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCategory)
+      });
+
+      const savedCategory = await res.json();
+      setCategories(prev => [...prev, savedCategory]);
+      navigate(`/items/new/${savedCategory._id}`);
+    } catch (err) {
+      console.error("Error creating category:", err);
+    }
   };
+
 
   return (
     <div className="category-selection">
@@ -45,17 +58,16 @@ export default function CategorySelection() {
       <div className="category-list">
         {categories.map((cat) => (
           <button
-            key={cat.id}
+            key={cat._id}
             className={`category-btn ${
-              selectedCategory === cat.id ? "selected" : ""
+              selectedCategory === cat._id ? "selected" : ""
             }`}
-            onClick={() => setSelectedCategory(cat.id)}
+            onClick={() => setSelectedCategory(cat._id)}
           >
             {cat.categoryName}
           </button>
         ))}
       </div>
-
       <div className="actions">
         <button
           className="btn-select"
