@@ -1,24 +1,23 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/categorySelection.css';
 
 export default function CategorySelection() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
-
   const navigate = useNavigate();
+  const { projectId } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/categories")
-    .then(res => res.json())
-    .then(data => setCategories(data))
-    .catch(err => console.error("Failed to fetch categories:", err));
+    fetch("http://localhost:5000/api/categories")
+      .then(res => res.json())
+      .then(data => setCategories(data))
+      .catch(err => console.error("Failed to fetch categories:", err));
   }, []);
 
   const handleSelect = () => {
     if (selectedCategory) {
-      navigate(`/item_Cat/${selectedCategory}`);
+      navigate(`/item_Cat/${projectId}/${selectedCategory}`);
     }
   };
 
@@ -51,7 +50,6 @@ export default function CategorySelection() {
     }
   };
 
-
   return (
     <div className="category-selection">
       <h2>Select a Category</h2>
@@ -59,9 +57,7 @@ export default function CategorySelection() {
         {categories.map((cat) => (
           <button
             key={cat._id}
-            className={`category-btn ${
-              selectedCategory === cat._id ? "selected" : ""
-            }`}
+            className={`category-btn ${selectedCategory === cat._id ? "selected" : ""}`}
             onClick={() => setSelectedCategory(cat._id)}
           >
             {cat.categoryName}

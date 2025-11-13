@@ -4,7 +4,7 @@ import App from './App.jsx';
 // Pages
 import Dashboard from './pages/Dashboard.jsx';
 import CategorySelection from './pages/CategorySelection.jsx';
-import ItemCatalogue from './pages/ItemCatalogue.jsx'; // unified browse + search
+import ItemCatalogue from './pages/ItemCatalogue.jsx';
 import ItemDetail from './pages/ItemDetail.jsx';
 import AddItem from './pages/AddItem.jsx';
 import ProjectCatalogue from './pages/ProjectCatalogue.jsx';
@@ -22,8 +22,8 @@ const routes = createBrowserRouter([
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'login', element: <Login /> },
       { path: 'catalogue/:projectId', element: <ProjectCatalogue /> },
-      { path: 'categories/new', element: <CategorySelection /> },
-      { path: 'item_Cat/:categoryId', element: <ItemCatalogue /> },
+      { path: 'categories/new/:projectId', element: <CategorySelection /> },
+      { path: 'item_Cat/:projectId/:categoryId', element: <ItemCatalogue /> },
       { path: 'item_detail/:itemId', element: <ItemDetail /> },
       { path: 'items/new/:categoryId', element: <AddItem /> },
       { path: 'audit', element: <AuditLogs /> }
@@ -32,4 +32,5 @@ const routes = createBrowserRouter([
 ]);
 
 export default routes;
+
 
