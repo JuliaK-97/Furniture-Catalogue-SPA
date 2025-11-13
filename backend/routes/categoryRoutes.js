@@ -3,23 +3,35 @@ import Category from "../models/Category.js";
 
 const router = express.Router();
 router.post("/categories", async (req, res) => {
-    try{
-        const category = new Category(req.body);
-        await category.save();
-        res.status(201).json(category);
-    } catch (err) {
-        res.status(400).json({error: err.message});
+  try {
+    const { categoryName, projectId } = req.body;
+    const category = new Category({
+      categoryName,
+      project: projectId
+    });
+    await category.save();
+    res.status(201).json(category);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ error: "Category name already exists" });
     }
+    res.status(400).json({ error: err.message });
+  }
 });
 
 router.get("/categories", async (req, res) => {
-    try{
-        const categories = await Category.find().sort({ createdAt: -1});
-        res.status(200).json(categories);
-        } catch (err) {
+  try {
+    const { projectId } = req.query;
+    const query = projectId ? { project: projectId } : {};
+    const categories = await Category.find(query)
+      .populate("project")
+      .sort({ createdAt: -1 });
+    res.status(200).json(categories);
+  } catch (err) {
     res.status(500).json({ error: err.message });
-    }
+  }
 });
+
 router.patch("/categories/:id", async (req, res) => {
   try {
     const updated = await Category.findByIdAndUpdate(
@@ -37,7 +49,7 @@ router.patch("/categories/:id", async (req, res) => {
 });
 router.get("/categories/:id", async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id).populate("project");
     if (!category) {
       return res.status(404).json({ error: "Category not found" });
     }

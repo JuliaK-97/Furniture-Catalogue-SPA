@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node start.js",
-    "test": "jest"
+    "test": "node --test tests/unit/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,8 @@
     "express": "^5.1.0",
     "mongoose": "^8.19.3",
     "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
   }
 }
