@@ -1,40 +1,35 @@
-/* src/styles/button.css */
-
 
 .btn-new {
   display: block;
-  margin: 2rem auto;              /* centers horizontally */
-  padding: 1.25rem 2.5rem;        /* bigger than other buttons */
-  font-size: 1.5rem;              /* larger text */
+  margin: 2rem auto;              
+  padding: 1.25rem 2.5rem;        
+  font-size: 1.5rem;             
   font-weight: bold;
   color: #fff;
-  background-color: #90ee90;      /* light green */
+  background-color: #90ee90;     
   border: none;
-  border-radius: 16px;            /* rounded edges */
+  border-radius: 16px;            
   cursor: pointer;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.25); /* drop shadow */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25); 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: sticky;               /* keeps it visible at the top */
-  top: 0;                         /* sticks to top of container */
+  position: sticky;               
+  top: 0;                         
   z-index: 10; 
 
 }
 
-/* Hover effect */
 .btn-new:hover {
-  background-color: #76d976;      /* darker green on hover */
-  transform: translateY(-3px);    /* lift effect */
+  background-color: #76d976;      
+  transform: translateY(-3px);   
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
-/* Active (click) effect */
+
 .btn-new:active {
   transform: translateY(0);
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-
-/* Base button style */
 .btn {
   color: #fff;
   padding: 6px 12px;
@@ -47,25 +42,25 @@
   margin-right: 8px;
 }
 
-/* Open Project button: green */
+
 .btn-open {
-  background-color: #2e7d32; /* dark green */
+  background-color: #2e7d32; 
 }
 
 .btn-open:hover {
-  background-color: #1b5e20; /* darker green on hover */
+  background-color: #1b5e20; 
 }
 
-/* Close Project button: red */
+
 .btn-close {
-  background-color: #c62828; /* dark red */
+  background-color: #c62828;
 }
 
 .btn-close:hover {
-  background-color: #8e0000; /* darker red on hover */
+  background-color: #8e0000; 
 }
 
-/* Disabled state (greyed out, no shadow) */
+
 .btn:disabled {
   background-color: #aaa;
   cursor: not-allowed;
