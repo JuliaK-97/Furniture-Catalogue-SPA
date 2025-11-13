@@ -16,7 +16,7 @@ test("Project schema requires name", async () => {
 test("Project schema rejects invalid status", async () => {
   const project = new Project({
     name: "Invalid Status Project",
-    status: "archived" // not allowed by enum
+    status: "archived" 
   });
 
   let error;
