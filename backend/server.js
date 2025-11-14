@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import projectRoutes from "./routes/projectRoutes.js";
 import cors from "cors";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import itemCatRoutes from "./routes/itemCatRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -22,4 +23,5 @@ app.get("/", (req, res) => {
 
 app.use("/api", projectRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", itemCatRoutes);
 export default app;
