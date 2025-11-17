@@ -26,6 +26,14 @@ test('POST /categories should return 409 on duplicate name', async () => {
   assert.equal(response.status, 409);
   assert.deepEqual(response.body, { error: 'Category name already exists' });
 });
+test('POST /categories should return 400 on validation error', async () => {
+  const response = await request(app)
+    .post('/categories')
+    .send({}); 
+
+  assert.equal(response.status, 400);
+  assert.ok(response.body.error); 
+});
 
 test('PATCH /categories/:id should update category', async () => {
   const response = await request(app)

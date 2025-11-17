@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node start.js",
-    "test": "node --test tests/unit/*.test.js"
+    "test:unit": "node --test tests/unit/*.test.js",
+    "test:integration": "cross-env NODE_ENV=test NODE_TEST_PARALLEL=0 MONGO_URI=mongodb://127.0.0.1:27017/furniture_catalogue_test node --test tests/integration/catalogueRoutes.test.js"
+
   },
   "keywords": [],
   "author": "",
@@ -16,9 +18,11 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mongoose": "^8.19.3",
+    "multer": "^2.0.2",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "supertest": "^7.1.4"
   }
 }

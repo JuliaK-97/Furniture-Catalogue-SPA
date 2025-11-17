@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const itemCatSchema = new mongoose.Schema({
+const itemNewSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   image: { type: String, required: true },
   categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true },
@@ -8,10 +8,4 @@ const itemCatSchema = new mongoose.Schema({
   lastUpdated: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-itemCatSchema.index({ projectId: 1, categoryId: 1, name: 1, image: 1 }, { unique: true });
-
-export default mongoose.models.ItemCat || mongoose.model("ItemCat", itemCatSchema);
-
-
-
-
+export default mongoose.models.ItemNew || mongoose.model("ItemNew", itemNewSchema);

@@ -2,6 +2,9 @@ function MockCategory(data) {
   return {
     ...data,
     save: async () => {
+      if (!data.categoryName) {
+        throw new Error('Category name is required');
+      }
       if (data.categoryName === 'duplicate') {
         const error = new Error('Duplicate key');
         error.code = 11000;

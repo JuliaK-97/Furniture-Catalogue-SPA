@@ -7,11 +7,16 @@
 
 .item-detail h2 {
   margin-bottom: 20px;
+  font-size: 1.6rem;
+  color: #2c2c2c;
+  text-align: center;
 }
 
 .item-detail label {
   display: block;
   margin-bottom: 12px;
+  font-weight: 600;
+  color: #333;
 }
 
 .item-detail input[type="text"] {
@@ -32,37 +37,15 @@ fieldset {
 
 legend {
   font-weight: bold;
+  margin-bottom: 8px;
+  color: #444;
 }
 
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 1rem;
   margin-top: 24px;
 }
 
-.btn-cancel {
-  background-color: #f44336;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.btn-submit {
-  background-color: #0078d4;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.btn-submit {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
 
