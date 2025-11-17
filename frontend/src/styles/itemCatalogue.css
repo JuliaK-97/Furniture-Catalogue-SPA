@@ -1,82 +1,71 @@
 .item-catalogue {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .item-catalogue h2 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  color: #2c2c2c;
+  text-align: center;
 }
 
 .search-bar {
-  width: 60%;
-  padding: 10px;
-  margin-bottom: 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.item-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.item-card {
-  width: 160px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.item-card img {
   width: 100%;
-  height: auto;
+  padding: 0.6rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.item-card {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-card img {
+  max-width: 100%;
+  max-height: 120px;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.item-card p {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.item-card:hover {
+  border: 2px solid #2196f3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
 .item-card.selected {
-  border-color: #0078d4;
-  background-color: #e6f0ff;
+  border: 2px solid #673ab7;
+  box-shadow: 0 2px 10px rgba(103,58,183,0.25);
 }
 
 .actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 1rem;
 }
 
-.actions button {
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.btn-select {
-  background-color: #0078d4;
-  color: #fff;
-}
-
-.btn-select:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.btn-cancel {
-  background-color: #f44336;
-  color: #fff;
-}
-
-.btn-dashboard {
-  background-color: #4caf50;
-  color: #fff;
-}

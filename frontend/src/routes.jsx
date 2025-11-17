@@ -1,15 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
-
-// Pages
 import Dashboard from './pages/Dashboard.jsx';
 import CategorySelection from './pages/CategorySelection.jsx';
 import ItemCatalogue from './pages/ItemCatalogue.jsx';
 import ItemDetail from './pages/ItemDetail.jsx';
 import AddItem from './pages/AddItem.jsx';
 import ProjectCatalogue from './pages/ProjectCatalogue.jsx';
-import Login from './pages/Login.jsx';
-import AuditLogs from './pages/AuditLogs.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 
 const routes = createBrowserRouter([
@@ -20,17 +16,16 @@ const routes = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'login', element: <Login /> },
       { path: 'catalogue/:projectId', element: <ProjectCatalogue /> },
       { path: 'categories/new/:projectId', element: <CategorySelection /> },
       { path: 'item_Cat/:projectId/:categoryId', element: <ItemCatalogue /> },
       { path: 'item_detail/:itemId', element: <ItemDetail /> },
-      { path: 'items/new/:categoryId', element: <AddItem /> },
-      { path: 'audit', element: <AuditLogs /> }
+      { path: 'items/new/:projectId/:categoryId', element: <AddItem /> },
     ]
   }
 ]);
 
 export default routes;
+
 
 

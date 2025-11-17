@@ -1,11 +1,12 @@
 import express from "express";
 import Project from "../models/Project.js";
+import Category from "../models/Category.js";
+import ItemNew from "../models/ItemNew.js";
 
 const router = express.Router();
 
 router.post("/projects", async (req, res) => {
   try {
-    console.log("Creating project:", req.body);
     const project = new Project(req.body);
     await project.save();
     res.status(201).json(project);
@@ -13,14 +14,23 @@ router.post("/projects", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
 router.get("/projects", async (req, res) => {
   try {
-    const projects = await Project.find().sort({ createdAt: -1 }); 
-    res.status(200).json(projects);
+    const projects = await Project.find().sort({ createdAt: -1 });
+    const enriched = await Promise.all(
+      projects.map(async (p) => {
+        const categoryCount = await Category.countDocuments(); // global count
+        const itemCount = await ItemNew.countDocuments({ projectId: p._id });
+        return { ...p.toObject(), categoryCount, itemCount };
+      })
+    );
+    res.status(200).json(enriched);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 router.patch("/projects/:id/status", async (req, res) => {
   try {
     const { status } = req.body;
@@ -34,22 +44,42 @@ router.patch("/projects/:id/status", async (req, res) => {
       return res.status(404).json({ error: "Project not found" });
     }
 
+    if (status === "closed") {
+      await ItemNew.deleteMany({ projectId: req.params.id });
+    }
+
     res.status(200).json(updatedProject);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 router.get("/projects/:id", async (req, res) => {
-    try {
-        const project = await Project.findById(req.params.id);
-        if (!project) {
-            return res.status(404).json({error:"Project doesn't exist or can't be found"});
-        }
-        res.status(200).json(project);
-    }catch (err) {
-    res.status(400).json({ error: err.message });
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
     }
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+router.delete("/projects/:id", async (req, res) => {
+  try {
+    const deletedProject = await Project.findByIdAndDelete(req.params.id);
+    if (!deletedProject) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+    await Category.deleteMany({ projectId: req.params.id });
+    await ItemNew.deleteMany({ projectId: req.params.id });
+
+    res.status(200).json({ message: "Project deleted successfully" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 
 export default router;
+
