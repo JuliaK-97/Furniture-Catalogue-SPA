@@ -42,6 +42,7 @@ cd Furniture-Catalogue-SPA
 
 ### Backend
 Run tests inside the `backend/` folder:
+- testing done in isolated testing environment env.test
 ```bash
 npm test
 ```
@@ -81,8 +82,11 @@ Diagrams and wireframes are stored in `/docs`:
 Development follows a Scrum model:
 - Sprint 1: UI and form
 - Sprint 2: Backend and image upload
-- Sprint 3: Docker, testing, and logging
-- Daily logs and retrospectives in `/docs/scrum-log.md`
+- Sprint 3: Docker, testing, and documentation
+Jira was used for:
+- product backlog
+- sprint backlog
+- progress and workflow tracking
 
 ---
 
