@@ -47,6 +47,9 @@ npm test
 ```
 
 ---
+## Documentation
+- The backend uses JSDoc-style inline documentation to describe API routes, parameters, and behaviors
+---
 
 ##  Folder Structure
 
