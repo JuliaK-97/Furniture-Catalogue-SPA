@@ -18,7 +18,7 @@ This project replaces manual furniture cataloguing with a digital workflow that 
 | Layer       | Technology        |
 |-------------|-------------------|
 | Frontend    | React.js          |
-| Backend     | FastAPI (Python)  |
+| Backend     | Node.js  |
 | Database    | MongoDB           |
 | Containers  | Docker + Compose  |
 | Storage     | local file system |
@@ -28,7 +28,7 @@ This project replaces manual furniture cataloguing with a digital workflow that 
 ### Prerequisites
 - Docker & Docker Compose
 - Git
-- Node.js & Python 3.11+
+- Node.js
 
 ### Clone the Repository
 ```bash
@@ -36,25 +36,14 @@ git clone https://github.com/JuliaK-97/Furniture-Catalogue-SPA.git
 cd Furniture-Catalogue-SPA
 ## 🌐 Access
 
-Once the app is running:
-
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:8000`
-
 ---
 
 ## 🧪 Testing
 
-### Frontend
-Run tests inside the `frontend/` folder:
-```bash
-npm test
-```
-
 ### Backend
 Run tests inside the `backend/` folder:
 ```bash
-pytest
+npm test
 ```
 
 ---
@@ -64,9 +53,9 @@ pytest
 ```
 Furniture-Catalogue-SPA/
 ├── frontend/          # React SPA
-├── backend/           # FastAPI backend
+├── backend/           # Node.js
 ├── database/          # DB models or seed data
-├── tests/             # Unit & integration tests
+├── tests/             # Unit & integration tests using node:test and supertest
 ├── docs/              # Wireframes, diagrams, Scrum logs
 ├── docker-compose.yml
 └── README.md
@@ -79,7 +68,7 @@ Furniture-Catalogue-SPA/
 Diagrams and wireframes are stored in `/docs`:
 - Home screen layout
 - Add/Edit form
-- C4 container diagram
+- C4 component diagram
 - API flowchart
 
 ---
@@ -91,14 +80,6 @@ Development follows a Scrum model:
 - Sprint 2: Backend and image upload
 - Sprint 3: Docker, testing, and logging
 - Daily logs and retrospectives in `/docs/scrum-log.md`
-
----
-
-## Security & Logging
-
-- JWT-based authentication
-- Basic logging with Python’s `logging` module
-- Optional ELK Stack integration for structured logs and visualization
 
 ---
 
