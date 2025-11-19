@@ -1,5 +1,5 @@
 # Furniture-Catalogue-SPA
-SPA + FastAPI backend for digitizing furniture cataloguing workflows
+A single-page application (SPA) with a Node.js backend for digitizing furniture cataloguing workflows
 ---
 ## Overview
 This project replaces manual furniture cataloguing with a digital workflow that enables:
@@ -17,8 +17,8 @@ This project replaces manual furniture cataloguing with a digital workflow that 
 
 | Layer       | Technology        |
 |-------------|-------------------|
-| Frontend    | React.js          |
-| Backend     | Node.js  |
+| Frontend    | React.js (Vite)   |
+| Backend     | Node.js + Express |
 | Database    | MongoDB           |
 | Containers  | Docker + Compose  |
 | Storage     | local file system |
@@ -28,13 +28,18 @@ This project replaces manual furniture cataloguing with a digital workflow that 
 ### Prerequisites
 - Docker & Docker Compose
 - Git
-- Node.js
+- Node.js (for local dev)
 
 ### Clone the Repository
 ```bash
 git clone https://github.com/JuliaK-97/Furniture-Catalogue-SPA.git
 cd Furniture-Catalogue-SPA
-## 🌐 Access
+
+### Run with Docker
+docker compose up -d
+Frontend: http://localhost:3000
+Backend API: http://localhost:5000/api
+MongoDB:mongodb://localhost:27017
 
 ---
 
@@ -42,10 +47,12 @@ cd Furniture-Catalogue-SPA
 
 ### Backend
 Run tests inside the `backend/` folder:
-- testing done in isolated testing environment env.test
-```bash
 npm test
-```
+- testing done in isolated testing environment env.test
+- coverage includes unit and integration tests using node:test and supertest
+
+
+
 
 ---
 ## Documentation
@@ -57,9 +64,9 @@ npm test
 ```
 Furniture-Catalogue-SPA/
 ├── frontend/          # React SPA
-├── backend/           # Node.js
+├── backend/           # Node.js API
 ├── database/          # DB models or seed data
-├── tests/             # Unit & integration tests using node:test and supertest
+├── tests/             # Unit & integration tests 
 ├── docs/              # Wireframes, diagrams, Scrum logs
 ├── docker-compose.yml
 └── README.md
@@ -83,20 +90,10 @@ Development follows a Scrum model:
 - Sprint 1: UI and form
 - Sprint 2: Backend and image upload
 - Sprint 3: Docker, testing, and documentation
-Jira was used for:
+Project Tracking was done in Jira
 - product backlog
 - sprint backlog
 - progress and workflow tracking
-
----
-
-## Project Status
-
-✅ Concept approved  
-✅ Architecture documented  
-🔄 Development in progress  
-📅 Presentation scheduled
-
 ---
 
 ## 📎 License
