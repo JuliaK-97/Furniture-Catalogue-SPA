@@ -34,9 +34,11 @@ This project replaces manual furniture cataloguing with a digital workflow that 
 ```bash
 git clone https://github.com/JuliaK-97/Furniture-Catalogue-SPA.git
 cd Furniture-Catalogue-SPA
-
+```
 ### Run with Docker
+``` bash
 docker compose up -d
+```
 Frontend: http://localhost:3000
 Backend API: http://localhost:5000/api
 MongoDB:mongodb://localhost:27017
@@ -47,7 +49,10 @@ MongoDB:mongodb://localhost:27017
 
 ### Backend
 Run tests inside the `backend/` folder:
-npm test
+``` bash
+npm run test:unit
+npm run test:integration
+```
 - testing done in isolated testing environment env.test
 - coverage includes unit and integration tests using node:test and supertest
 
@@ -59,7 +64,7 @@ npm test
 - The backend uses JSDoc-style inline documentation to describe API routes, parameters, and behaviors
 ---
 
-##  Folder Structure
+## Folder Structure
 
 ```
 Furniture-Catalogue-SPA/
