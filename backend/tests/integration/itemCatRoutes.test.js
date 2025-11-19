@@ -8,10 +8,21 @@ import ItemCat from '../../models/ItemCat.js';
 import ItemNew from '../../models/ItemNew.js';
 import Project from '../../models/Project.js';
 import Category from '../../models/Category.js';
-
+/**
+ * @fileoverview
+ * Integration tests for ItemCat API routes, including:
+ * - Creating, reading, updating, and deleting catalogue items
+ * - Confirming ItemCat to create a new ItemNew
+ * Uses Node.js test runner, fetch, and Mongoose.
+ */
 let server;
 const port = 3005;
-
+/**
+ * Before all tests:
+ * - Connect to MongoDB
+ * - Initialize collections (ensure indexes)
+ * - Start HTTP server
+ */
 test.before(async () => {
   await mongoose.connect(process.env.MONGO_URI);
   await ItemCat.init();
@@ -21,19 +32,30 @@ test.before(async () => {
   server = http.createServer(app);
   await new Promise((resolve) => server.listen(port, resolve));
 });
-
+/**
+ * Before each test:
+ * - Clear relevant collections to ensure test isolation
+ */
 test.beforeEach(async () => {
   await ItemCat.deleteMany({});
   await ItemNew.deleteMany({});
   await Project.deleteMany({});
   await Category.deleteMany({});
 });
-
+/**
+ * After all tests:
+ * - Close MongoDB connection
+ * - Stop HTTP server
+ */
 test.after(async () => {
   await mongoose.connection.close();
   await new Promise((resolve) => server.close(resolve));
 });
-
+/**
+ * Test: POST /api/itemCats
+ * Creates a new catalogue item 
+ * Expects 201 status and correct item fields
+ */
 test('POST /api/itemCats creates a new itemCat', async () => {
   const project = await Project.create({ name: 'Test Project' });
   const category = await Category.create({ categoryName: 'Test Category' });
@@ -54,7 +76,11 @@ test('POST /api/itemCats creates a new itemCat', async () => {
   assert.equal(data.name, 'Chair');
   assert.equal(data.image, 'chair.png');
 });
-
+/**
+ * Test: GET /api/itemCats
+ * Retrieves all catalogue items
+ * Expects 200 status and non-empty array
+ */
 test('GET /api/itemCats returns all itemCats', async () => {
   const project = await Project.create({ name: 'Proj' });
   const category = await Category.create({ categoryName: 'Cat' });
@@ -66,7 +92,11 @@ test('GET /api/itemCats returns all itemCats', async () => {
   assert.ok(Array.isArray(data));
   assert.ok(data.length > 0);
 });
-
+/**
+ * Test: GET /api/itemCats/:id
+ * Retrieves a specific catalogue item by ID
+ * Expects 200 status and correct item data
+ */
 test('GET /api/itemCats/:id returns itemCat if found', async () => {
   const project = await Project.create({ name: 'Proj' });
   const category = await Category.create({ categoryName: 'Cat' });
@@ -77,7 +107,11 @@ test('GET /api/itemCats/:id returns itemCat if found', async () => {
   const data = await res.json();
   assert.equal(data.name, 'Lamp');
 });
-
+/**
+ * Test: PATCH /api/itemCats/:id
+ * Updates catalogue item fields
+ * Expects 200 status and updated values
+ */
 test('PATCH /api/itemCats/:id updates itemCat', async () => {
   const project = await Project.create({ name: 'Proj' });
   const category = await Category.create({ categoryName: 'Cat' });
@@ -93,7 +127,11 @@ test('PATCH /api/itemCats/:id updates itemCat', async () => {
   const data = await res.json();
   assert.equal(data.name, 'New');
 });
-
+/**
+ * Test: DELETE /api/itemCats/:id
+ * Deletes a catalogue item
+ * Expects 200 status, confirmation message, and item removed from DB
+ */
 test('DELETE /api/itemCats/:id deletes itemCat', async () => {
   const project = await Project.create({ name: 'Proj' });
   const category = await Category.create({ categoryName: 'Cat' });
@@ -110,7 +148,11 @@ test('DELETE /api/itemCats/:id deletes itemCat', async () => {
   const exists = await ItemCat.findById(itemCat._id);
   assert.equal(exists, null);
 });
-
+/**
+ * Test: POST /api/itemCats/:id/confirm
+ * Confirms a catalogue item and creates a new ItemNew
+ * Expects 201 status and ItemNew with same name as ItemCat
+ */
 test('POST /api/itemCats/:id/confirm creates ItemNew from ItemCat', async () => {
   const project = await Project.create({ name: 'Proj' });
   const category = await Category.create({ categoryName: 'Cat' });

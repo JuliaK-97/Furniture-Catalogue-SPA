@@ -2,7 +2,18 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/addItem.css';
 import '../styles/button.css';
-
+/**
+ * @component AddItem
+ * @description
+ * Provides a form for adding a new item under a selected category in a project.
+ * Features include:
+ *  - Input for item name
+ *  - File upload for item image with preview
+ *  - Form validation to ensure required fields are completed
+ *  - Saves new item to backend API
+ *  - Options to navigate to item detail, back to category, or dashboard after saving
+ * @returns {JSX.Element} The rendered Add Item form component.
+ */
 export default function AddItem() {
   const { categoryId, projectId } = useParams();
   const [itemName, setItemName] = useState('');
@@ -10,17 +21,26 @@ export default function AddItem() {
   const [newItemId, setNewItemId] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const navigate = useNavigate();
+ const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/categories/${categoryId}`)
+    fetch(`${API_BASE_URL}/categories/${categoryId}`)
       .then(res => res.json())
       .then(data => setCategoryName(data.categoryName))
       .catch(() => {});
-  }, [categoryId]);
-
+  }, [categoryId, API_BASE_URL]);
+  /**
+   * @function handleSave
+   * @description
+   * Validates that all required fields are filled.
+   * Creates FormData to include name, image, categoryId, and projectId.
+   * Sends POST request to backend to save item.
+   * Updates `newItemId` state on success and alerts user.
+   */
   const handleSave = async () => {
     if (!itemName || !imageFile) {
-      alert("Please fill in all fields");
+      alert("Please fill in all fields");// ensures that required input forms are filled in
       return;
     }
     const formData = new FormData();
@@ -29,7 +49,7 @@ export default function AddItem() {
     formData.append("categoryId", categoryId);
     formData.append("projectId", projectId);
     try {
-      const res = await fetch("http://localhost:5000/api/items", {
+      const res = await fetch(`${API_BASE_URL}/items`, {
         method: "POST",
         body: formData
       });
@@ -40,11 +60,20 @@ export default function AddItem() {
       alert("Error saving item");
     }
   };
-
+  /**
+   * @function handleGoToCategory
+   * @description
+   * Navigates back to the category page for the current project.
+   */
   const handleGoToCategory = () => {
     navigate("/categories/new/" + projectId);
   };
-
+  /**
+   * @function handleGoToDetail
+   * @description
+   * Navigates to the item detail page for the newly saved item.
+   * Alerts user if no item ID is available.
+   */
   const handleGoToDetail = () => {
     if (newItemId) {
       navigate(`/item_detail/${newItemId}`);
@@ -52,12 +81,16 @@ export default function AddItem() {
       alert("No item ID available yet");
     }
   };
-
+  /**
+   * @function handleCancel
+   * @description
+   * Cancels the form and navigates back to the category page.
+   */
   const handleCancel = () => {
     navigate("/categories/new/" + projectId);
   };
 
-  const isFormComplete = itemName.trim() !== "" && imageFile !== null;
+  const isFormComplete = itemName.trim() !== "" && imageFile !== null;// Helps determine if form is valid
 
   return (
     <div className="add-item-form">

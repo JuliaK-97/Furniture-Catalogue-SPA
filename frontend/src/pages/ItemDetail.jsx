@@ -2,10 +2,23 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/itemDetail.css";
 import "../styles/button.css";
-
+/**
+ * @component ItemDetail
+ * @description
+ * Displays the detailed view for a single item, allowing users to:
+ *  - View basic item information (name, project)
+ *  - Edit condition and select applicable damage types
+ *  - Edit item location (area, zone, floor)
+ *  - Submit updates to the backend or cancel edits
+ *  - Navigate back to the dashboard or project catalogue
+ * Fetches item data and item details from the backend API on mount, and handles
+ * both existing items and fallback cases when data is missing.
+ * @returns {JSX.Element} The rendered item detail component.
+ */
 export default function ItemDetail() {
   const { itemId } = useParams();
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const [itemName, setItemName] = useState("");
   const [condition, setCondition] = useState("Good");
@@ -16,20 +29,28 @@ export default function ItemDetail() {
   const [lotNumber, setLotNumber] = useState("");
   const [projectId, setProjectId] = useState("");
   const [showDamageOptions, setShowDamageOptions] = useState(false);
-
+//predefined damage options for items
   const damageOptions = ["Scratches", "Broken leg", "Stained", "Torn fabric", "Water damage", "Missing part"];
-
+  /**
+   * @function fetchItemData
+   * @description
+   * Fetches the main item data from the `/items` endpoint.
+   * If item is not found, falls back to `/itemCats`.
+   * Sets `itemName` and `projectId` for rendering and navigation.
+   * Provides robustness in case item exists only in alternate endpoint.
+   * @returns {Promise<void>}
+   */
 useEffect(() => {
   const fetchItemData = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/items/${itemId}`);
+      const res = await fetch(`${API_BASE_URL}/items/${itemId}`);
       if (!res.ok) throw new Error("Not found in items");
       const data = await res.json();
       setItemName(data.name);
       setProjectId(data.projectId);
     } catch {
       try {
-        const res = await fetch(`http://localhost:5000/api/itemCats/${itemId}`);
+        const res = await fetch(`${API_BASE_URL}/itemCats/${itemId}`);
         if (!res.ok) throw new Error("Not found in itemCats");
         const data = await res.json();
         setItemName(data.name);
@@ -39,11 +60,16 @@ useEffect(() => {
       }
     }
   };
-
+  /**
+   * @function fetchDetail
+   * @description
+   * Fetches detailed information for the item, including condition, damage, location, lot number, and associated project. 
+   * This populates editable fields.
+   */
   const fetchDetail = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/item-details/${itemId}`);
-      if (!res.ok) return;
+      const res = await fetch(`${API_BASE_URL}/item-details/${itemId}`);
+      if (!res.ok) return;// silently fail if no detail exists
       const detail = await res.json();
       setCondition(detail.condition);
       setDamageTypes(detail.damageTypes || []);
@@ -57,14 +83,27 @@ useEffect(() => {
 
   fetchItemData();
   fetchDetail();
-}, [itemId]);
+}, [itemId, API_BASE_URL]);
 
-
+  /**
+   * @function handleConditionChange
+   * @description
+   * Updates `condition` state and shows/hides damage options based on whether the condition is "Good".
+   * @param {String} value - The selected condition ("Good", "Fair", "Poor")
+   * @returns {void}
+   */
   const handleConditionChange = (value) => {
     setCondition(value);
     setShowDamageOptions(value !== "Good");
   };
-
+  /**
+   * @function handleDamageToggle
+   * @description
+   * Adds or removes a damage type from `damageTypes` state.
+   * Allows multiple damage types to be selected.
+   * @param {String} type - Damage type to toggle
+   * @returns {void}
+   */
   const handleDamageToggle = (type) => {
     setDamageTypes(prev =>
       prev.includes(type)
@@ -72,18 +111,39 @@ useEffect(() => {
         : [...prev, type]
     );
   };
-
+  /**
+   * @function handleCancel
+   * @description
+   * Navigates back to the item category page without saving changes.
+   * Uses `projectId` and `itemId` for proper routing.
+   * @returns {void}
+   */
   const handleCancel = () => {
     navigate(`/item_Cat/${projectId}/${itemId}`);
   };
-
+  /**
+   * @function handleDashboard
+   * @description
+   * Navigates the user back to the dashboard page.
+   * @returns {void}
+   */
   const handleDashboard = () => {
     navigate("/dashboard");
   };
-
+  /**
+   * @function handleSubmit
+   * @description
+   * Sends a PUT request to update item details on the backend.
+   * Updates local state with returned `lotNumber` and navigates back to catalogue.
+   * Alerts the user in case of error.
+   * extra Notes:
+   * - Sends all editable fields including condition, damage, and location.
+   * - Ensures UI reflects backend updates immediately.
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/item-details/${itemId}`, {
+      const res = await fetch(`${API_BASE_URL}/item-details/${itemId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
