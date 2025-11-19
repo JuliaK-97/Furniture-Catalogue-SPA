@@ -95,6 +95,7 @@ Development follows a Scrum model:
 - Sprint 1: UI and form
 - Sprint 2: Backend and image upload
 - Sprint 3: Docker, testing, and documentation
+
 Project Tracking was done in Jira
 - product backlog
 - sprint backlog
