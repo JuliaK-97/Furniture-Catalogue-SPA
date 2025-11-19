@@ -1,4 +1,16 @@
 import mongoose from "mongoose";
+/**ItemDetail Schema
+ * acts as a blueprint for how an items details are stored in MongoDB
+ * supports consistent data access and management across projects
+ * @field itemId - reference to the item the details belong to (required, unique)
+ * @field projectId - reference to the project the item detail belongs to (required)
+ * @field condition - reference to the condition of the item ("Good", "Fair", "Poor", required)
+ * @field damageTypes - reference to the item's condition, specifically the damage if it is given the condition "Fair" or "Poor"
+ * @field lotNumber - automatically generated lot number for each item (required)
+ * @field location - reference to the item's location (physical) in three areas ("area", "zone", "floor", required)
+ * @field lastUpdated - Timestamp for last modification
+ * @field timestamps - Automatically manages createdAt and updatedAt fields
+ */
 
 const itemDetailSchema = new mongoose.Schema({
   itemId: {

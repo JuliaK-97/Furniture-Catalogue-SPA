@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/projectCatalogue.css';
 import '../styles/button.css';
-
+/**
+ * @component ProjectCatalogue
+ * @description
+ * Displays all items for a specific project in a tabular catalogue.
+ * Supports filtering by name, category, and lot number, as well as item deletion and navigation to item details.
+ * Uses `projectId` from the URL to fetch project info and related catalogue items.
+ * Includes buttons for viewing details, deleting items, and navigating back to dashboard.
+ * @returns {JSX.Element} The rendered project catalogue component.
+ */
 export default function ProjectCatalogue() {
   const { projectId } = useParams();
   const [projectName, setProjectName] = useState('');
@@ -14,19 +22,29 @@ export default function ProjectCatalogue() {
   });
 
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+  /**
+   * Fetch project info and catalogue items when the component mounts or projectId changes. Errors are handled gracefully.
+   * Two fetch calls: one for project info, one for items to separate concerns.
+   * .catch blocks: ensures UI doesn't crash if server is unavailable.
+   */
   useEffect(() => {
-    fetch(`http://localhost:5000/api/projects/${projectId}`)
+    fetch(`${API_BASE_URL}/projects/${projectId}`)
       .then(res => res.json())
       .then(data => setProjectName(data.name))
       .catch(() => setProjectName('Unknown Project'));
 
-    fetch(`http://localhost:5000/api/catalogue/${projectId}`)
+    fetch(`${API_BASE_URL}/catalogue/${projectId}`)
       .then(res => res.json())
       .then(data => setItems(data))
       .catch(() => setItems([]));
-  }, [projectId]);
-
+  }, [projectId, API_BASE_URL]);
+  /**
+   * Apply filters in real-time on the frontend
+   * Filters are applied using Array.filter for efficiency and instant UX.
+   * toLowerCase ensures case-insensitive matching.
+   */
   const filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(filters.name.toLowerCase()) &&
     item.categoryName.toLowerCase().includes(filters.category.toLowerCase()) &&
@@ -93,7 +111,7 @@ export default function ProjectCatalogue() {
                   <button
                     className="btn btn-delete"
                     onClick={async () => {
-                      await fetch(`http://localhost:5000/api/catalogue/${item._id}`, { method: "DELETE" });
+                      await fetch(`${API_BASE_URL}/catalogue/${item._id}`, { method: "DELETE" });
                       setItems(prev => prev.filter(i => i._id !== item._id));
                     }}
                    >Delete</button>
