@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/projectCatalogue.css';
 import '../styles/button.css';
 /**
@@ -13,6 +13,7 @@ import '../styles/button.css';
  */
 export default function ProjectCatalogue() {
   const { projectId } = useParams();
+  const location = useLocation();
   const [projectName, setProjectName] = useState('');
   const [items, setItems] = useState([]);
   const [filters, setFilters] = useState({
@@ -20,6 +21,7 @@ export default function ProjectCatalogue() {
     category: '',
     lot: ''
   });
+  const readonly = new URLSearchParams(location.search).get("mode") === "readonly";
 
   const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
@@ -106,14 +108,14 @@ export default function ProjectCatalogue() {
                     "No location"
                   )}
                 </td>
-                <td className="actions-cell">
-                  <button className="btn btn-detail" onClick={() => navigate(`/item_detail/${item._id}`)}>View</button>
+                <td className="actions-cell">{/*Closed project are read only: delete and view buttons are disabled*/}
+                  <button className="btn btn-detail" onClick={() => navigate(`/item_detail/${item._id}`)} disabled={readonly}>View</button>
                   <button
                     className="btn btn-delete"
                     onClick={async () => {
                       await fetch(`${API_BASE_URL}/catalogue/${item._id}`, { method: "DELETE" });
                       setItems(prev => prev.filter(i => i._id !== item._id));
-                    }}
+                    }}disabled={readonly}
                    >Delete</button>
                 </td>
              </tr>

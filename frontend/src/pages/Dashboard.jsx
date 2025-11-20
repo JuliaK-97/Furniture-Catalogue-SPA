@@ -132,7 +132,7 @@ export default function Dashboard() {
             <div style={{ marginTop: 8 }}>
               <button className="btn btn-open" onClick={() => handleOpen(p)}>Open Project</button>
               <button className="btn btn-close" onClick={() => handleClose(p._id)} disabled={p.status === 'closed'}>Close Project</button>
-              <button className="btn btn-add-category" onClick={() => navigate(`/categories/new/${p._id}`)}>Select Category</button>
+              <button className="btn btn-add-category" onClick={() => navigate(`/categories/new/${p._id}`)} disabled={p.status === 'closed'}>Select Category</button>
              <button className="btn btn-danger" 
              onClick={() => handleDelete(p._id)}>Delete Project</button>
             </div>

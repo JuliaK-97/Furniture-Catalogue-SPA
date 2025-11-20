@@ -64,7 +64,6 @@ router.get("/projects", async (req, res) => {
  * @description
  * Updates the `status` field of a specific Project document. Also updates
  * the `lastUpdated` timestamp. Validation is enforced through Mongoose.
- * If the updated status is `"closed"`, all ItemNew documents associated with the project (matched by `projectId`) are deleted automatically.
  * @param {String} req.params.id - The ID of the project to update.
  * @param {String} req.body.status - The new status value for the project.
  * @returns {Object} 200 - The updated project object.
@@ -82,10 +81,6 @@ router.patch("/projects/:id/status", async (req, res) => {
 
     if (!updatedProject) {
       return res.status(404).json({ error: "Project not found" });
-    }
-
-    if (status === "closed") {
-      await ItemNew.deleteMany({ projectId: req.params.id });
     }
 
     res.status(200).json(updatedProject);
