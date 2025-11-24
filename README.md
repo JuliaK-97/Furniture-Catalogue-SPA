@@ -88,6 +88,27 @@ Diagrams and wireframes are stored in `/docs`:
 - API flowchart
 
 ---
+## Component Concept
+The System is composed of 3 primary levels - Frontend SPA, Backend API application, and Storage systems. There are clear relationships between these.
+### Frontend SPA (React + Vite)
+- provides the user interface
+- handles navigation, and forms
+- communicates with backend APIs via JSON/HTTP
+- depends on backend APIs for all data operation
+### Backend API (Node.js + Express)
+- Exposes RESTful APIs for catalogue, items, categories, projects, and item details
+- includes middleware for error handling and validation
+- provides and upload component for storing and retrieving item images
+- Project API: manage catalogue projects and status
+- Category API: manages global categories
+- New Item API: creates new items with validation
+- Item Detail API: metadata and audit information
+- Cataglogue API: deals with specific items in a project
+### Database and storage:
+- MongoDB: stores structured data for projects, categories, items, and metadata
+- File System: stores uploaded images linked to items
+- Backend APIs perform CRUD operations on MongoDB
+---
 
 ## Scrum Process
 
